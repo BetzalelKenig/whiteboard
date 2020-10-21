@@ -1,6 +1,7 @@
 @import "~bootstrap/dist/css/bootstrap.css";
-
-body {  
+body {
     /* background-image: url("./assets/bbg.jpg"); */
-      background-color: rgba(0, 0, 0, 0.81);  color: aqua; }
-
+    background: rgba(58, 163, 37, 0.81);
+    background-color: rgba(0, 0, 0, 0.81);
+    color: aqua;
+}

@@ -21,9 +21,11 @@ export class WhiteboardComponent implements OnInit, AfterViewInit {
   @ViewChild('canvas') public canvas: ElementRef;
   @ViewChild('lColor') public lColor: ElementRef;
   @ViewChild('lineWidth') public lWidth: ElementRef;
+  @ViewChild('bgColor') public bgColor: ElementRef;
   private _ctx: CanvasRenderingContext2D;
    _canvasWidth;
    _canvasHeight;
+   bg_Color = 'white';
   private _canvasPoints = [];
 
   private _mouseDown: boolean = false;
@@ -35,21 +37,35 @@ export class WhiteboardComponent implements OnInit, AfterViewInit {
     settings: { color: '', size: 0 },
   };
   constructor(private el: ElementRef) {}
-  ngAfterViewInit(): void {
-    this._ctx = this.canvas.nativeElement.getContext('2d');
-    console.log(this._ctx);
-    
-    this._ctx.canvas.width = 1000;//this.canvasMeta.width;
-    this._ctx.canvas.height = 1000;//this.canvasMeta.height;
-  }
 
- 
   ngOnInit(): void {
    
   }
 
+  ngAfterViewInit(): void {
+    this._ctx = this.canvas.nativeElement.getContext('2d');
+   
+    
+    this._ctx.canvas.width = 1000;//this.canvasMeta.width;
+    this._ctx.canvas.height = 1000;//this.canvasMeta.height;
+    this.bg_Color = this.bgColor.nativeElement.value;
+    this._ctx.canvas.style.background = this.bg_Color;
+    // this._ctx.fillStyle= 'white';//this.bgColor.nativeElement.value;
+    // this._ctx.fillRect(0,0,1000,1000);
+  }
+
+ 
+ 
+
   clearCanvas() {
     this._ctx.clearRect(0, 0, this._ctx.canvas.width, this._ctx.canvas.height);
+  }
+
+  @HostListener('click')
+  onclick(){
+    
+    // this._ctx.fillStyle = this.bgColor.nativeElement.value;
+    // this._ctx.fillRect(0,0,1000,1000);
   }
 
   @HostListener('mousedown')
@@ -116,7 +132,7 @@ export class WhiteboardComponent implements OnInit, AfterViewInit {
     this._ctx.beginPath();
     this._ctx.moveTo(p1.x, p1.y);
 
-    for (var i = 1, len = drawData.length; i < len; i++) {
+    for (let i = 1, len = drawData.length; i < len; i++) {
       let midPoint = this.midPointBtw(p1, p2);
       this._ctx.lineCap = 'round';
       this._ctx.lineJoin = 'round';
