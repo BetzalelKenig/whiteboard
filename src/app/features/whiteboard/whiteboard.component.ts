@@ -1,11 +1,11 @@
 import {
   Component,
   OnInit,
-  AfterViewInit,
   ViewChild,
   ElementRef,
   Input,
   HostListener,
+  AfterViewInit,
 } from '@angular/core';
 
 @Component({
@@ -13,11 +13,14 @@ import {
   templateUrl: './whiteboard.component.html',
   styleUrls: ['./whiteboard.component.css'],
 })
-export class WhiteboardComponent implements OnInit {
+export class WhiteboardComponent implements OnInit, AfterViewInit {
   // lineColor = 'blue';
   // lineWidth = 5;
+
   @Input() canvasMeta: any;
   @ViewChild('canvas') public canvas: ElementRef;
+  @ViewChild('lColor') public lColor: ElementRef;
+  @ViewChild('lineWidth') public lWidth: ElementRef;
   private _ctx: CanvasRenderingContext2D;
    _canvasWidth;
    _canvasHeight;
@@ -32,14 +35,21 @@ export class WhiteboardComponent implements OnInit {
     settings: { color: '', size: 0 },
   };
   constructor(private el: ElementRef) {}
+  ngAfterViewInit(): void {
+    this._ctx = this.canvas.nativeElement.getContext('2d');
+    console.log(this._ctx);
+    
+    this._ctx.canvas.width = 1000;//this.canvasMeta.width;
+    this._ctx.canvas.height = 1000;//this.canvasMeta.height;
+  }
+
+ 
+  ngOnInit(): void {
+   
+  }
 
   clearCanvas() {
     this._ctx.clearRect(0, 0, this._ctx.canvas.width, this._ctx.canvas.height);
-  }
-  ngOnInit(): void {
-    this._ctx = this.canvas.nativeElement.getContext('2d');
-    this._ctx.canvas.width = this.canvasMeta.width;
-    this._ctx.canvas.height = this.canvasMeta.height;
   }
 
   @HostListener('mousedown')
@@ -62,8 +72,8 @@ export class WhiteboardComponent implements OnInit {
 			this._mousePosition.newX = event.clientX - this.canvasComponent.nativeElement.getBoundingClientRect().left;
 			this._mousePosition.newY = event.clientY - this.canvasComponent.nativeElement.getBoundingClientRect().top;
 			*/
-      this._mousePosition.settings.size = 5;
-      this._mousePosition.settings.color = 'blue';
+      this._mousePosition.settings.size = this.lWidth.nativeElement.value;
+      this._mousePosition.settings.color = this.lColor.nativeElement.value;
 
       this._canvasPoints.push({
         x:
@@ -71,7 +81,7 @@ export class WhiteboardComponent implements OnInit {
           this.canvas.nativeElement.getBoundingClientRect().left,
         y:
           event.clientY - this.canvas.nativeElement.getBoundingClientRect().top,
-        settings: { size: 5, color: 'blue' },
+        settings: { size: this.lWidth.nativeElement.value, color: this.lColor.nativeElement.value },
       });
 
       this.drawLine(this._canvasPoints);
