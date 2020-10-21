@@ -6,9 +6,7 @@
           type="button"
           class="btn btn-primary dropdown-toggle"
           data-toggle="dropdown"
-        >
-          
-        </button>
+        ></button>
         <div class="dropdown-menu">
           <a class="dropdown-item" href="#">Link 1</a>
           <a class="dropdown-item" href="#">Link 2</a>
@@ -17,11 +15,17 @@
       </div>
     </li>
     <li class="nav-item">
-        <div style="border: red dotted 1px;">
-       <label for="lineColor">Line Color</label><br><input type="color" name="" id="lineColor" class="btn btn-primary btn-sm" /></div>
-      
+      <div style="border: red dotted 1px">
+        <label for="lineColor">Line Color</label><br /><input
+          type="color"
+          name=""
+          id="lineColor"
+          class="btn btn-primary btn-sm"
+        />
+      </div>
     </li>
   </ul>
 </nav>
 
-<canvas #canvas id="canvas" class="canvas" style="border: 1px solid #000000"> </canvas>
+
+<canvas #canvas [style.width.px]="_canvasWidth" [style.height.px]="_canvasHeight" style="border: 1px solid #000000"></canvas>
