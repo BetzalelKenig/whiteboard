@@ -22,10 +22,10 @@ export class WhiteboardComponent implements OnInit, AfterViewInit {
   @ViewChild('lColor') public lColor: ElementRef;
   @ViewChild('lineWidth') public lWidth: ElementRef;
   @ViewChild('bgColor') public bgColor: ElementRef;
-  private _ctx: CanvasRenderingContext2D;
-   _canvasWidth;
-   _canvasHeight;
-   bg_Color = 'white';
+  private ctx: CanvasRenderingContext2D;
+  _canvasWidth;
+  _canvasHeight;
+  bg_color = '#00ffff';
   private _canvasPoints = [];
 
   private _mouseDown: boolean = false;
@@ -38,34 +38,29 @@ export class WhiteboardComponent implements OnInit, AfterViewInit {
   };
   constructor(private el: ElementRef) {}
 
-  ngOnInit(): void {
-   
-  }
+  ngOnInit(): void {}
 
   ngAfterViewInit(): void {
-    this._ctx = this.canvas.nativeElement.getContext('2d');
-   
-    
-    this._ctx.canvas.width = 1000;//this.canvasMeta.width;
-    this._ctx.canvas.height = 1000;//this.canvasMeta.height;
-    this.bg_Color = this.bgColor.nativeElement.value;
-    this._ctx.canvas.style.background = this.bg_Color;
-    // this._ctx.fillStyle= 'white';//this.bgColor.nativeElement.value;
-    // this._ctx.fillRect(0,0,1000,1000);
+    this.ctx = this.canvas.nativeElement.getContext('2d');
+
+    this.ctx.canvas.width = 1109; //this.canvasMeta.width;
+    this.ctx.canvas.height = 1000; //this.canvasMeta.height;
+    this.bg_color = this.bgColor.nativeElement.value;
+    this.ctx.canvas.style.background = this.bg_color;
+    // this.ctx.fillStyle= 'white';//this.bgColor.nativeElement.value;
+    // this.ctx.fillRect(0,0,1000,1000);
   }
 
- 
- 
-
   clearCanvas() {
-    this._ctx.clearRect(0, 0, this._ctx.canvas.width, this._ctx.canvas.height);
+    this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
   }
 
   @HostListener('click')
-  onclick(){
-    
-    // this._ctx.fillStyle = this.bgColor.nativeElement.value;
-    // this._ctx.fillRect(0,0,1000,1000);
+  onclick() {
+    this.bg_color = this.bgColor.nativeElement.value;
+    this.ctx.canvas.style.background = this.bg_color;
+    // this.ctx.fillStyle = this.bgColor.nativeElement.value;
+    // this.ctx.fillRect(0,0,1000,1000);
   }
 
   @HostListener('mousedown')
@@ -97,7 +92,10 @@ export class WhiteboardComponent implements OnInit, AfterViewInit {
           this.canvas.nativeElement.getBoundingClientRect().left,
         y:
           event.clientY - this.canvas.nativeElement.getBoundingClientRect().top,
-        settings: { size: this.lWidth.nativeElement.value, color: this.lColor.nativeElement.value },
+        settings: {
+          size: this.lWidth.nativeElement.value,
+          color: this.lColor.nativeElement.value,
+        },
       });
 
       this.drawLine(this._canvasPoints);
@@ -112,16 +110,16 @@ export class WhiteboardComponent implements OnInit, AfterViewInit {
   drawLine(drawData) {
     /*
       console.log(mousePos.oldX - mousePos.newX);
-      this._ctx.beginPath();
-      this._ctx.lineWidth = mousePos.settings.size;
-          this._ctx.lineCap = 'round';
-          this._ctx.lineJoin = 'round';
-          this._ctx.shadowBlur = 2;
-        this._ctx.shadowColor = mousePos.settings.color;
-      this._ctx.strokeStyle = mousePos.settings.color;
-      this._ctx.moveTo(mousePos.oldX, mousePos.oldY);
-      this._ctx.lineTo(mousePos.newX, mousePos.newY);
-      this._ctx.stroke();
+      this.ctx.beginPath();
+      this.ctx.lineWidth = mousePos.settings.size;
+          this.ctx.lineCap = 'round';
+          this.ctx.lineJoin = 'round';
+          this.ctx.shadowBlur = 2;
+        this.ctx.shadowColor = mousePos.settings.color;
+      this.ctx.strokeStyle = mousePos.settings.color;
+      this.ctx.moveTo(mousePos.oldX, mousePos.oldY);
+      this.ctx.lineTo(mousePos.newX, mousePos.newY);
+      this.ctx.stroke();
       */
     if (drawData.length < 1) {
       return;
@@ -129,24 +127,24 @@ export class WhiteboardComponent implements OnInit, AfterViewInit {
     let p1 = drawData[0];
     let p2 = drawData[1];
 
-    this._ctx.beginPath();
-    this._ctx.moveTo(p1.x, p1.y);
+    this.ctx.beginPath();
+    this.ctx.moveTo(p1.x, p1.y);
 
     for (let i = 1, len = drawData.length; i < len; i++) {
       let midPoint = this.midPointBtw(p1, p2);
-      this._ctx.lineCap = 'round';
-      this._ctx.lineJoin = 'round';
-      this._ctx.lineWidth = drawData[i].settings.size;
-      this._ctx.shadowBlur = 2;
-      this._ctx.shadowColor = drawData[i].settings.color;
-      this._ctx.strokeStyle = drawData[i].settings.color;
-      this._ctx.quadraticCurveTo(p1.x, p1.y, midPoint.x, midPoint.y);
+      this.ctx.lineCap = 'round';
+      this.ctx.lineJoin = 'round';
+      this.ctx.lineWidth = drawData[i].settings.size;
+      this.ctx.shadowBlur = 2;
+      this.ctx.shadowColor = drawData[i].settings.color;
+      this.ctx.strokeStyle = drawData[i].settings.color;
+      this.ctx.quadraticCurveTo(p1.x, p1.y, midPoint.x, midPoint.y);
       p1 = drawData[i];
       p2 = drawData[i + 1];
     }
 
-    //this._ctx.lineTo(p1.x, p1.y);
-    this._ctx.stroke();
+    //this.ctx.lineTo(p1.x, p1.y);
+    this.ctx.stroke();
   }
 
   midPointBtw(p1, p2) {

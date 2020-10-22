@@ -1,36 +1,77 @@
 <nav class="navbar navbar-expand-sm bg-primary navbar-dark">
-    <ul class="navbar-nav">
-        <li class="nav-item active">
-            <div class="dropdown">
-                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"></button>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">Link 1</a>
-                    <a class="dropdown-item" href="#">Link 2</a>
-                    <a class="dropdown-item" href="#">Link 3</a>
-                </div>
-            </div>
-        </li>
-        <li class="nav-item">
-            <div style="border: red dotted 3px">
-                <label for="lineColor">Line Color</label><br />
-                <input #lColor type="color" value="#ffff00" name="" id="lineColor" class="btn btn-primary btn-sm" />
-            </div>
-        </li>
-        <li class="nav-item" style="margin-left: 20px;">
-            <div style="border: red dotted 3px">
-                <label for="vol">Line width</label><br>
-                <input #lineWidth type="range" value="3" id="vol" name="vol" min="0" max="20">
-            </div>
-        </li>
-        <li class="nav-item" style="margin-left: 20px; ">
-            <div style="border: red dotted 3px">
-                <label for="bgColor">Background Color</label><br /><input #bgColor type="color" value="#00ff00" name="" id="bgColor" class="btn btn-primary btn-sm" />
-            </div>
-        </li>
-        <li><button type="button" (click)="clearCanvas()">Clear</button></li>
-    </ul>
+  <ul class="navbar-nav">
+    <li class="nav-item active">
+      <div class="dropdown">
+        <button
+          type="button"
+          class="btn btn-primary dropdown-toggle"
+          data-toggle="dropdown"
+        ></button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="#">Link 1</a>
+          <a class="dropdown-item" href="#">Link 2</a>
+          <a class="dropdown-item" href="#">Link 3</a>
+        </div>
+      </div>
+    </li>
+    <li class="nav-item">
+      <div style="border: red dotted 3px">
+        <label for="lineColor">Line Color</label><br />
+        <input
+          #lColor
+          type="color"
+          value="#000"
+          name=""
+          id="lineColor"
+          class="btn btn-primary btn-sm"
+        />
+      </div>
+    </li>
+    <li class="nav-item" style="margin-left: 20px">
+      <div style="border: red dotted 3px">
+        <label for="vol">Line width</label><br />
+        <input
+          #lineWidth
+          type="range"
+          value="3"
+          id="vol"
+          name="vol"
+          min="0"
+          max="20"
+        />
+      </div>
+    </li>
+    <li class="nav-item" style="margin-left: 20px">
+      <div style="border: red dotted 3px">
+        <label for="bgColor">Background Color</label><br /><input
+          #bgColor
+          type="color"
+          value="#00ffff"
+          name=""
+          id="bgColor"
+          class="btn btn-primary btn-sm"
+        />
+      </div>
+    </li>
+    <li style="margin-left: 20px">
+      <button class="btn btn-danger" type="button" (click)="clearCanvas()">
+        Clear the screen
+      </button>
+    </li>
+    <li>
+      <button id="downloadLnk" download="YourFileName.jpg">
+        <i class="fa fa-download"></i>
+        Download as image
+      </button>
+    </li>
+  </ul>
 </nav>
 
-
-<canvas #canvas [style.width.px]="_canvasWidth" [style.height.px]="_canvasHeight" style="border: 1px solid #000000;" [style.background]="bg_color"></canvas>
+<canvas
+  #canvas
+  [style.width.px]="_canvasWidth"
+  [style.height.px]="_canvasHeight"
+  style="border: 1px solid #000000"
+  [style.background]="bg_color"
+></canvas>
 <!--  [ngStyle]="{'background': this.bgColor.nativeElement.value}" -->
