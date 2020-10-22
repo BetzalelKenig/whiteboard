@@ -7,6 +7,7 @@ import {
   HostListener,
   AfterViewInit,
 } from '@angular/core';
+import { url } from 'inspector';
 
 @Component({
   selector: 'app-whiteboard',
@@ -22,6 +23,7 @@ export class WhiteboardComponent implements OnInit, AfterViewInit {
   @ViewChild('lColor') public lColor: ElementRef;
   @ViewChild('lineWidth') public lWidth: ElementRef;
   @ViewChild('bgColor') public bgColor: ElementRef;
+  @ViewChild('download') public download: ElementRef;
   private ctx: CanvasRenderingContext2D;
   _canvasWidth;
   _canvasHeight;
@@ -59,6 +61,7 @@ export class WhiteboardComponent implements OnInit, AfterViewInit {
   onclick() {
     this.bg_color = this.bgColor.nativeElement.value;
     this.ctx.canvas.style.background = this.bg_color;
+    this.ctx.canvas.style.cursor = "url('../../../assets/icons/pencil.png')"; //???
     // this.ctx.fillStyle = this.bgColor.nativeElement.value;
     // this.ctx.fillRect(0,0,1000,1000);
   }
@@ -152,6 +155,19 @@ export class WhiteboardComponent implements OnInit, AfterViewInit {
       x: p1.x + (p2.x - p1.x) / 2,
       y: p1.y + (p2.y - p1.y) / 2,
     };
+  }
+
+  saveImage() {
+    this.canvas.nativeElement.setAttribute('download', 'image.png');
+    window.open(
+      this.canvas.nativeElement
+        .toDataURL('image/png')
+        .replace('image/png', 'image/octet-stream')
+    );
+    let gh = this.canvas.nativeElement.toDataURL('png');
+
+    //this.download.nativeElement.href = gh;
+    this.download.nativeElement.download = 'image.png';
   }
 }
 

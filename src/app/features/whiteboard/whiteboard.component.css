@@ -1,7 +1,7 @@
 canvas {
-  cursor: url("../../../assets/icons/pencil.png"), auto !important;
+  cursor: url("../../../assets/icons/pencil.png"), default !important;
 }
 
 button {
-    margin: 15px;
+  margin: 15px;
 }

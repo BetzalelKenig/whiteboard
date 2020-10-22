@@ -61,9 +61,10 @@
     </li>
     <li>
       <button
+        #download
+        (click)="saveImage()"
         class="btn btn-warning"
         id="downloadLnk"
-        download="YourFileName.jpg"
       >
         <i class="fa fa-download"></i>
         Download
@@ -71,16 +72,23 @@
     </li>
   </ul>
 </nav>
-<div style="cursor: url('../../../assets/icons/pencil.png'), auto !important">
-  <canvas
-    #canvas
-    [style.width.px]="_canvasWidth"
-    [style.height.px]="_canvasHeight"
-    style="
-      border: 1px solid #000000;
-      cursor: url('../../../assets/icons/pencil.png'), auto;
-    "
-    [style.background]="bg_color"
-  ></canvas>
-</div>
+<!-- <button
+  style="
+    pointer-events: none;
+    cursor: url('../../../assets/icons/pencil.png'), default;
+  "
+>
+  asgdeheashrftqhwejtrw4tr
+</button> -->
+<canvas
+  #canvas
+  [style.width.px]="_canvasWidth"
+  [style.height.px]="_canvasHeight"
+  style="
+    border: 1px solid #000000;
+    cursor: url('../../../assets/icons/pencil.png'), default;
+  "
+  [style.background]="bg_color"
+></canvas>
+
 <!--  [ngStyle]="{'background': this.bgColor.nativeElement.value}" -->
